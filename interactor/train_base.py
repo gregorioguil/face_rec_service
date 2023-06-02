@@ -14,12 +14,12 @@ import tensorflow as tf
 img_height = 180
 img_width = 180
 
-files=os.listdir("./dataset")
+files=os.listdir("../dataset")
 print(files)
 print(tf.__version__)
 image_array=[]
 label_array=[]
-path="./dataset/"
+path="../dataset/"
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
   path,
@@ -160,6 +160,9 @@ history = model.fit(
 
 # with open("model.tflite", "wb") as f:
 #   f.write(tflite_model)
+
+model.save("model.h5")
+print('Model saved.')
   
 img = tf.keras.utils.load_img(
   path+"angelina_jolie/498.jpg", target_size=(img_height, img_width)

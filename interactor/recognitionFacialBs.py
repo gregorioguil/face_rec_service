@@ -33,16 +33,18 @@ class RecognitionFacialBs:
             # model.add(layers.Dense(1))
 
 
-            img = cv2.imread("./new-image.jpg")
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img =  tf.keras.utils.load_img(
+                "./new-image.jpg", target_size=(180, 180)
+            )
+            #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # img = cv2.resize(img, (96,96))
-            img = img/255.0
+            #img = img/255.0
             # img = tf.concat(img, axis=0)
             img = tf.keras.utils.img_to_array(img)
             img = tf.expand_dims(img, 0)
-            img = tf.image.resize(img, [180, 180])
+            # img = tf.image.resize(img, [180, 180])
             print('Leu mensagem')
-            model = load_model('model.h5')
+            model = load_model("model.h5")
             print("Carregou model")
             model.summary()
 
@@ -56,14 +58,19 @@ class RecognitionFacialBs:
             print(np.argmax(score))
             print(100 * np.max(score))
             class_names = os.listdir("./dataset")
+            print(class_names)
+            name = class_names[np.argmax(score)]
+            confiance = 100 * np.max(score)
             print(
                 "This image most likely belongs to {} with a {:.2f} percent confidence."
-                .format(class_names[np.argmax(score)], 100 * np.max(score))
+                .format(name, confiance)
             )
 
             # model.load_weights(latest)
 
             return {
+                'name': name,
+                'percent_confidence': confiance,
                 'face_detected': True
             }
         except Exception as error:

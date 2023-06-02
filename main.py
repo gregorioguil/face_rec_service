@@ -1,5 +1,4 @@
-import asyncio
-from flask import Flask, render_template, request
+from flask import Flask, request
 from controllers.detectionFacial import DetectionFacialController
 from controllers.recognitionFacial import RecognitionFacialController
 #from controllers.recognitionTrain import RecognitionTrainController
