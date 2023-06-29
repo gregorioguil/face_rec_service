@@ -16,6 +16,6 @@ RUN conda install -c menpo opencv
 
 EXPOSE 5001
 
-ENTRYPOINT [ "python3" ]
+ENTRYPOINT [ "python" ]
 
 CMD [ "main.py" ]

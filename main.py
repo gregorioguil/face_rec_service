@@ -1,31 +1,19 @@
 from flask import Flask, request
 from controllers.detectionFacial import DetectionFacialController
 from controllers.recognitionFacial import RecognitionFacialController
-#from controllers.recognitionTrain import RecognitionTrainController
-
+from controllers.user import UserController
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-@app.route('/test')
-def test():
-    return 'Hello World! Eu estou maluco.'
-
-
-@app.route('/detection/facial', methods = ['POST'])
+@app.route('/face/detection', methods = ['POST'])
 def detection():
     if request.method == 'POST':
         f = request.files['photo']
         detec = DetectionFacialController(f)
         return detec.detect()
-        #f.save(secure_filename(f.filename))
-        #return 'file uploaded successfully'
     return 'upload photo fail'
 
-@app.route('/recognition/facial', methods = ['POST'])
+@app.route('/face/recognition', methods = ['POST'])
 def recognition():
     if request.method == 'POST':
         f = request.files['photo']
@@ -41,3 +29,18 @@ def recognition():
 #             "train": "waiting"
 #         }
 
+@app.route('/user/<id>', methods = ['GET'])
+def getUser(id):
+    controller = UserController()
+    return controller.get(id)
+
+@app.route('/users', methods = ['GET'])
+def getUsers():
+    controller = UserController()
+    return controller.list()
+
+@app.route('/user', methods = ['POST'])
+def createUser():
+    user = request.get_json()
+    controller = UserController()
+    return controller.create(user)
