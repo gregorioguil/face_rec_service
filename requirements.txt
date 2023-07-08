@@ -1,4 +1,5 @@
 flask
-scikit-learn
 tensorflow
-opencv
+scikit-build
+opencv-python
+sqlalchemy

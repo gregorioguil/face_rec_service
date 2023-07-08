@@ -1,12 +1,21 @@
-from datetime import date
+import json
+from datetime import datetime
+from repositories.userRepository import UserRepository
 
 class UserBs:
   def get(self, id):
+    config = open('config/databases.json')
+    config = json.load(config)
+    userRepository = UserRepository(config)
+    user = userRepository.getUserGym(id)
+    today = datetime.today().date()
+
+    monthlyPayment = today <= user["expiredAt"].date()
     return {
-      "user_id": id,
-      "name": "Angelina jolie",
-      "monthly_payment": True,
-      "expired_at": "2023-06-28" 
+      "user_id": user["id"],
+      "name": user["name"],
+      "monthly_payment": monthlyPayment,
+      "expired_at": user["expiredAt"]
     }
     
   def list(self):
@@ -31,5 +40,5 @@ class UserBs:
     return {
       "name": user['name'],
       "id": 4,
-      "created_at": date.today()
+      "created_at": datetime.today().date()
     }
