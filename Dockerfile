@@ -1,21 +1,18 @@
-FROM continuumio/anaconda
+FROM ubuntu:18.04
 
-# RUN apt-get update -y && \
-#     apt-get install -y python3 python3-pip python3-dev python3-distutils
+RUN apt-get update -y && \
+    apt-get install -y python3 python3-pip python3-dev python3-distutils
 
 COPY . /app
 
 WORKDIR /app
 
-RUN conda install flask
-RUN conda install scikit-learn
-RUN conda install tensorflow
-RUN conda install -c menpo opencv
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 
-# -r requirements.txt
+RUN pip3 install --upgrade pip
+RUN pip3 install -r requirements.txt
 
-EXPOSE 5001
+EXPOSE 5000
 
-ENTRYPOINT [ "python" ]
-
-CMD [ "main.py" ]
+ENTRYPOINT [ "python3", "app.py" ]

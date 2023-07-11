@@ -3,3 +3,4 @@ tensorflow
 scikit-build
 opencv-python
 sqlalchemy
+mysql-connector-python

@@ -3,10 +3,12 @@ from datetime import datetime
 from repositories.userRepository import UserRepository
 
 class UserBs:
+  def __init__(self):
+    self.config = open('config/databases.json')
+    self.config = json.load(self.config)
+
   def get(self, id):
-    config = open('config/databases.json')
-    config = json.load(config)
-    userRepository = UserRepository(config)
+    userRepository = UserRepository(self.config)
     user = userRepository.getUserGym(id)
     today = datetime.today().date()
 
@@ -19,26 +21,27 @@ class UserBs:
     }
     
   def list(self):
-    return [{
-      "user_id": 1,
-      "name": "Angelina jolie",
-      "monthly_payment": True,
-      "expired_at": "2023-06-28" 
-    },{
-      "user_id": 2,
-      "name": "Brad Pitt",
-      "monthly_payment": True,
-      "expired_at": "2023-06-22" 
-    },{
-      "user_id": 3,
-      "name": "Mohamed Ali",
-      "monthly_payment": True,
-      "expired_at": "2023-02-22" 
-    }]
+    userRepository = UserRepository(self.config)
+    users = userRepository.listUsersGym()
+    result = []
+    today = datetime.today().date()
+    
+    for user in users:
+      monthlyPayment = today <= user["expiredAt"].date()
+      
+      result.append({
+        "user_id": user["id"],
+        "name": user["name"],
+        "monthly_payment": monthlyPayment,
+        "expired_at": user["expiredAt"]
+      })
+
+    return result
     
   def create(self, user):
+    userRepository = UserRepository(self.config)
+    userRepository.createUserGym(user)
     return {
       "name": user['name'],
-      "id": 4,
       "created_at": datetime.today().date()
     }
