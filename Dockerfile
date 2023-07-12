@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 RUN apt-get update -y && \
     apt-get install -y python3 python3-pip python3-dev python3-distutils

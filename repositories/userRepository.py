@@ -34,4 +34,3 @@ class UserRepository:
     result = connection.execute(text("INSERT INTO user_gym (name, age, document, expired_at) values (:name, :age, :document, :expired_at)"), user)
     connection.commit()
 
-
