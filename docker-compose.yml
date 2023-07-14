@@ -1,7 +1,6 @@
 version: '3' 
 services: 
  web:
-   network_mode: host 
    build: . 
    command: python3 /app/app.py 
    volumes: 
@@ -10,5 +9,3 @@ services:
    - "5000:5000"
    expose:
    - "5000"
-   extra_hosts:
-    - "host.docker.internal:host-gateway"

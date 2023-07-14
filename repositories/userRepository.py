@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, text
 
 class UserRepository:
   def __init__(self, config):
-    connection_string = "mysql+mysqlconnector://root:password@127.0.0.1:3306/face_rec_service"
+    connection_string = "mysql+mysqlconnector://root:password@host.docker.internal:3306/face_rec_service"
     self.engine = create_engine(connection_string, echo=True)
     
   def getUserGym(self, id):
