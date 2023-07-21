@@ -1,9 +1,11 @@
 from flask import Flask, request
+from flask_cors import CORS
 from controllers.detectionFacial import DetectionFacialController
 from controllers.recognitionFacial import RecognitionFacialController
 from controllers.user import UserController
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/face/detection', methods = ['POST'])
 def detection():
@@ -37,7 +39,8 @@ def getUser(id):
 @app.route('/users', methods = ['GET'])
 def getUsers():
     controller = UserController()
-    return controller.list()
+    response = controller.list()
+    return response
 
 @app.route('/user', methods = ['POST'])
 def createUser():
