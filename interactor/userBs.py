@@ -12,12 +12,23 @@ class UserBs:
     user = userRepository.getUserGym(id)
     today = datetime.today().date()
 
-    monthlyPayment = today <= user["expiredAt"].date()
+    monthlyPayment = today <= user["expiredAt"]
     return {
       "user_id": user["id"],
       "name": user["name"],
+      "age": user["age"],
+      "email": user["email"],
+      "phone": user["phone"],
+      "document": user["document"],
       "monthly_payment": monthlyPayment,
-      "expired_at": user["expiredAt"]
+      "expired_at": user["expiredAt"],
+      "address": {
+        "number": user["address"]["number"],
+        "street": user["address"]["street"],
+        "city": user["address"]["city"],
+        "cep": user["address"]["cep"],
+        "district": user["address"]["district"]
+      }
     }
     
   def list(self):
@@ -27,7 +38,7 @@ class UserBs:
     today = datetime.today().date()
     
     for user in users:
-      monthlyPayment = today <= user["expiredAt"].date()
+      monthlyPayment = today <= user["expiredAt"]
       
       result.append({
         "user_id": user["id"],

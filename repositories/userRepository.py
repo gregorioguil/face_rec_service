@@ -7,14 +7,26 @@ class UserRepository:
     
   def getUserGym(self, id):
     connection = self.engine.connect()
-    result = connection.execute(text("select * from face_rec_service.user_gym where id = :id"), dict(id=id))
+    result = connection.execute(
+      text("select * from face_rec_service.user_gym u inner join face_rec_service.address a on a.id = u.address_id where u.id = :id"), dict(id=id))
     user = {}
     
     for row in result.mappings():
       user = {
       "id": id,
       "name": row["name"],
-      "expiredAt": row["expired_at"]}
+      "age": row["age"],
+      "email": row["email"],
+      "phone": row["phone"],
+      "document": row["document"],
+      "expiredAt": row["expired_at"],
+      "address": {
+        "number": row["number"],
+        "street": row["street"],
+        "city": row["city"],
+        "cep": row["cep"],
+        "district": row["district"]
+      }}
     return user
   
   def listUsersGym(self):

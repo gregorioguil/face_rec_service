@@ -7,12 +7,14 @@ CREATE TABLE `user_gym` (
   `name` varchar(100) NOT NULL,
   `age` int NOT NULL,
   `document` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `expired_at` datetime NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `phone` int DEFAULT NULL,
+  `address_id` int unsigned NOT NULL,
+  `expired_at` date NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 
 -- face_rec_service.user_photos definition
 
@@ -22,5 +24,19 @@ CREATE TABLE `user_photos` (
   `created_at` datetime NOT NULL,
   `updated_at` varchar(100) NOT NULL,
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- face_rec_service.address definition
+
+CREATE TABLE `address` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `number` int NOT NULL,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `cep` int DEFAULT NULL,
+  `district` varchar(100) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
