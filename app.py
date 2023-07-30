@@ -21,6 +21,7 @@ def recognition():
         f = request.files['photo']
         r = RecognitionFacialController(f)
         return r.recognize()
+    return 'upload photo fail'
 
 # @app.route('/recognition/train', methods = ['GET'])
 # async def train():

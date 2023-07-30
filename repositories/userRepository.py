@@ -43,6 +43,7 @@ class UserRepository:
   
   def createUserGym(self, user):
     connection = self.engine.connect()
-    result = connection.execute(text("INSERT INTO user_gym (name, age, document, expired_at) values (:name, :age, :document, :expired_at)"), user)
+    result = connection.execute(
+      text("INSERT INTO user_gym (name, age, document, email, phone, expired_at) values (:name, :age, :document, :email, :phone, :expired_at)"), user)
     connection.commit()
 

@@ -5,3 +5,4 @@ scikit-build
 opencv-python-headless
 sqlalchemy
 mysql-connector-python
+pillow
