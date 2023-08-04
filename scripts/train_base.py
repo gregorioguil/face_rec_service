@@ -76,7 +76,7 @@ reduce_lr=tf.keras.callbacks.ReduceLROnPlateau(factor=0.9,
                                               min_lr=1e-6)
 
 
-epochs=100
+epochs=10
 history = model.fit(
   train_ds,
   validation_data=val_ds,
