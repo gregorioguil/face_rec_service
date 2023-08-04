@@ -34,36 +34,16 @@ class RecognitionFacialBs:
                 batch_size=64)
 
             class_names = train_ds.class_names            
-            
-            img3 = tf.keras.utils.load_img(
-                path+"Isabel/1.jpeg", target_size=(240, 240)
-            )
-
-            img_array = tf.keras.utils.img_to_array(img3)
-            img_array = tf.expand_dims(img_array, 0)
-            
-            predictions = model.predict(img_array)
-            score = tf.nn.softmax(predictions[0])
-
-            print(
-                "1This image most likely belongs to {} with a {:.2f} percent confidence."
-                .format(class_names[np.argmax(score)], 100 * np.max(score))
-            )
 
             img = tf.keras.utils.load_img(
-                "new-image.jpg", target_size=(240, 240)
+                "new-image.jpg", target_size=(img_height, img_width)
             )
             
             img = tf.keras.utils.img_to_array(img)
             img = tf.expand_dims(img, 0)
 
-            # print(img)
-            print("Predição")
             predictions = model.predict(img)
-
-            # print(predictions)
             score = tf.nn.softmax(predictions[0])
-
 
             print(np.argmax(score))
             print(100 * np.max(score))
@@ -71,7 +51,7 @@ class RecognitionFacialBs:
             name = class_names[np.argmax(score)]
             confiance = 100 * np.max(score)
             print(
-                "0This image most likely belongs to {} with a {:.2f} percent confidence."
+                "This image most likely belongs to {} with a {:.2f} percent confidence."
                 .format(name, confiance)
             )
             
