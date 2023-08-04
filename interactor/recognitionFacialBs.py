@@ -1,11 +1,8 @@
 import os
-import cv2
 import numpy as np
 
 import tensorflow as tf
-from tensorflow import keras
-from keras import layers, callbacks, utils, applications, optimizers
-from tensorflow.keras.models import Sequential, Model, load_model
+from tensorflow.keras.models import load_model
 from interactor.detectionFacialBs import DetectionFacialBs
 
 class RecognitionFacialBs:
@@ -16,58 +13,68 @@ class RecognitionFacialBs:
     def recognize(self):
         print('Inicio')
         try:
+            model = load_model("models/model.h5")
+            img_height = 240
+            img_width = 240
+            print("Carregou model")
             detection = DetectionFacialBs(self.photo)
             resultDetection = detection.detect()
             print(resultDetection)
-            # model = Sequential()
+            if resultDetection['face_detected'] == False:
+                return {
+                    'face_detected': False
+                }
+            path="./dataset/"
+            train_ds = tf.keras.utils.image_dataset_from_directory(
+                path,
+                validation_split=0.8,
+                subset="training",
+                seed=123,
+                image_size=(img_height,img_width),
+                batch_size=64)
 
-            # pretrained_model = tf.keras.applications.EfficientNetB7(input_shape=(96,96,3), include_top=False, weights="imagenet")
-
-            # for layer in pretrained_model.layers:
-            #     layer.trainable=False
-
-            # model.add(pretrained_model)
-            # model.add(layers.GlobalAveragePooling2D())
-            # model.add(layers.Dropout(0.3))
-
-            # model.add(layers.Dense(1))
-
-
-            img =  tf.keras.utils.load_img(
-                "./new-image.jpg", target_size=(180, 180)
+            class_names = train_ds.class_names            
+            
+            img3 = tf.keras.utils.load_img(
+                path+"Isabel/1.jpeg", target_size=(240, 240)
             )
-            #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            # img = cv2.resize(img, (96,96))
-            #img = img/255.0
-            # img = tf.concat(img, axis=0)
+
+            img_array = tf.keras.utils.img_to_array(img3)
+            img_array = tf.expand_dims(img_array, 0)
+            
+            predictions = model.predict(img_array)
+            score = tf.nn.softmax(predictions[0])
+
+            print(
+                "1This image most likely belongs to {} with a {:.2f} percent confidence."
+                .format(class_names[np.argmax(score)], 100 * np.max(score))
+            )
+
+            img = tf.keras.utils.load_img(
+                "new-image.jpg", target_size=(240, 240)
+            )
+            
             img = tf.keras.utils.img_to_array(img)
             img = tf.expand_dims(img, 0)
-            # img = tf.image.resize(img, [180, 180])
-            print('Leu mensagem')
-            model = load_model("model.h5")
-            print("Carregou model")
-            model.summary()
 
             # print(img)
+            print("Predição")
             predictions = model.predict(img)
 
-            print(predictions)
+            # print(predictions)
             score = tf.nn.softmax(predictions[0])
 
 
             print(np.argmax(score))
             print(100 * np.max(score))
-            class_names = os.listdir("./dataset")
             print(class_names)
             name = class_names[np.argmax(score)]
             confiance = 100 * np.max(score)
             print(
-                "This image most likely belongs to {} with a {:.2f} percent confidence."
+                "0This image most likely belongs to {} with a {:.2f} percent confidence."
                 .format(name, confiance)
             )
-
-            # model.load_weights(latest)
-
+            
             return {
                 'name': name,
                 'percent_confidence': confiance,
