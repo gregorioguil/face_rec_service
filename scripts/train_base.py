@@ -85,7 +85,6 @@ history = model.fit(
 
 model.summary()
 
-model.save_weights("../models/model_weights.h5")
 model.save("../models/model.h5")
 print('Model saved.')
 
