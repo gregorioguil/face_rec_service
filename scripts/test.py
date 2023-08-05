@@ -39,7 +39,7 @@ print(
 )
 
 img3 = tf.keras.utils.load_img(
-  path+"bernardo/6.jpeg", target_size=(img_height, img_width)
+  path+"gregorio/IMG_20211231_222511.jpg", target_size=(img_height, img_width)
 )
 
 img_array = tf.keras.utils.img_to_array(img3)

@@ -17,7 +17,7 @@ path="../dataset/"
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
   path,
-  validation_split=0.8,
+  validation_split=0.2,
   subset="training",
   seed=123,
   image_size=(img_height,img_width),
