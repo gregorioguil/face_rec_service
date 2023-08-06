@@ -40,3 +40,16 @@ CREATE TABLE `address` (
   `updated_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- face_rec_service.payment definition
+
+CREATE TABLE `payment` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_gym_id` int NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `date` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `payment_id_IDX` (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

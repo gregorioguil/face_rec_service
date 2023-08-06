@@ -1,8 +1,8 @@
 import numpy as np
 import os
 
-from keras import layers, callbacks, utils, applications, optimizers
-from tensorflow.keras.models import Sequential, Model, load_model
+from keras import layers
+from tensorflow.keras.models import Sequential, load_model
 import tensorflow as tf
 
 img_height = 240
@@ -17,21 +17,21 @@ path="../dataset/"
 
 train_ds = tf.keras.utils.image_dataset_from_directory(
   path,
-  validation_split=0.2,
+  validation_split=0.3,
   subset="training",
   seed=123,
   image_size=(img_height,img_width),
-  batch_size=64)
+  batch_size=128)
 
 class_names = train_ds.class_names
 
 val_ds = tf.keras.utils.image_dataset_from_directory(
   path,
-  validation_split=0.2,
+  validation_split=0.3,
   subset="validation",
   seed=123,
   image_size=(img_height, img_width),
-  batch_size=64)
+  batch_size=128)
 
 AUTOTUNE = tf.data.AUTOTUNE
 
@@ -102,7 +102,7 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "Usuário {} identificado com {:.2f} % de confiança"
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
 
@@ -117,7 +117,7 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "Usuário {} identificado com {:.2f} % de confiança"
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
 
@@ -132,7 +132,7 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "Usuário {} identificado com {:.2f} % de confiança"
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
 
@@ -147,12 +147,12 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "Usuário {} identificado com {:.2f} % de confiança"
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
 
 img4 = tf.keras.utils.load_img(
-  path+"Isabel/1.jpeg", target_size=(img_height, img_width)
+  path+"gregorio/2.jpeg", target_size=(img_height, img_width)
 )
 
 img_array = tf.keras.utils.img_to_array(img4)
@@ -162,12 +162,12 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "Usuário {} identificado com {:.2f} % de confiança"
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )
 
 img5 = tf.keras.utils.load_img(
-  path+"Isabel/2.jpeg", target_size=(img_height, img_width)
+  path+"maria_flor/2.jpeg", target_size=(img_height, img_width)
 )
 
 img_array = tf.keras.utils.img_to_array(img5)
@@ -177,6 +177,21 @@ predictions = model.predict(img_array)
 score = tf.nn.softmax(predictions[0])
 
 print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
+    "Usuário {} identificado com {:.2f} % de confiança"
+    .format(class_names[np.argmax(score)], 100 * np.max(score))
+)
+
+img5 = tf.keras.utils.load_img(
+  path+"bernardo/2.jpeg", target_size=(img_height, img_width)
+)
+
+img_array = tf.keras.utils.img_to_array(img5)
+img_array = tf.expand_dims(img_array, 0)
+  
+predictions = model.predict(img_array)
+score = tf.nn.softmax(predictions[0])
+
+print(
+    "Usuário {} identificado com {:.2f} % de confiança"
     .format(class_names[np.argmax(score)], 100 * np.max(score))
 )

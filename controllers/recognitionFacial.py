@@ -4,6 +4,6 @@ class RecognitionFacialController:
     def __init__(self, photo):
         self.photo = photo
 
-    def recognize(self):
-        bs = RecognitionFacialBs(self.photo)
+    def recognize(self, model):
+        bs = RecognitionFacialBs(self.photo, model)
         return bs.recognize()

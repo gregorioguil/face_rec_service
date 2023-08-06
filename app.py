@@ -1,11 +1,14 @@
 from flask import Flask, request
 from flask_cors import CORS
+from tensorflow.keras.models import load_model
 from controllers.detectionFacial import DetectionFacialController
 from controllers.recognitionFacial import RecognitionFacialController
 from controllers.user import UserController
 
 app = Flask(__name__)
 CORS(app)
+
+model = load_model("models/model.h5")
 
 @app.route('/face/detection', methods = ['POST'])
 def detection():
@@ -20,17 +23,8 @@ def recognition():
     if request.method == 'POST':
         f = request.files['photo']
         r = RecognitionFacialController(f)
-        return r.recognize()
+        return r.recognize(model)
     return 'upload photo fail'
-
-# @app.route('/recognition/train', methods = ['GET'])
-# async def train():
-#     if request.method == 'GET':
-#         r = RecognitionTrainController()
-#         await r.train()
-#         return {
-#             "train": "waiting"
-#         }
 
 @app.route('/user/<id>', methods = ['GET'])
 def getUser(id):
